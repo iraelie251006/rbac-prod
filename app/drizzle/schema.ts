@@ -1,2 +1,2 @@
 
-import * as users from "./schemas/users";
+import * as authSchema from './schemas/auth-schema';
