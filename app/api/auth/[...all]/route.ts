@@ -59,11 +59,11 @@ export async function POST(req: Request) {
             } else {
                 message = "Invalid email address";
             }
-
-            return Response.json({message}, {status: 400})}
+            return Response.json({message}, {status: 400})
         } else {
             return new Response(null, {status: 403})
         }
+    }
     return authHandler.POST(clonedRequest);
 }
 
