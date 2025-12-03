@@ -2,10 +2,23 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../drizzle/db";
 import { nextCookies } from "better-auth/next-js";
+import { sendPasswordResetEmail } from "./emails/password-reset-email";
+import { sendEmailVerificationEmail } from "./emails/email-verification";
 
 export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
+        requireEmailVerification: true,
+        sendResetPassword: async ({user, url}) => {
+            await sendPasswordResetEmail({user, url})
+        },
+    },
+    emailVerification: {
+        autoSignInAfterVerification: true,
+        sendOnSignUp: true,
+        sendVerificationEmail: async ({user, url}) => {
+            await sendEmailVerificationEmail({user, url})
+        },
     },
     socialProviders: {
         github: {
@@ -28,3 +41,7 @@ export const auth = betterAuth({
         provider: "pg",
     }),
 });
+function sendVerificationEmail(arg0: { user: { id: string; createdAt: Date; updatedAt: Date; email: string; emailVerified: boolean; name: string; image?: string | null | undefined; }; url: string; }) {
+    throw new Error("Function not implemented.");
+}
+
